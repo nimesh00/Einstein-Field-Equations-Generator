@@ -8,7 +8,7 @@ import tex
 
 def get_christoffel_symbols(metric, axes):
     metric_inv = metric.inv()
-    print('Inverse Metric')
+    # print('Inverse Metric')
     # print(metric_inv)
     # christoffel = sp.Matrix.zeros(4, 4, 4)
     christoffel = np.zeros([4, 4, 4], dtype = type(sp.Symbol('')))
@@ -24,7 +24,7 @@ def get_christoffel_symbols(metric, axes):
                 christoffel[i][j][k] = sp.simplify(christoffel[i][j][k])
                     # Chrostoffel[i][j][k] += 
                 # print(christoffel[i][j][k])
-    print('Christoffel Symbols: \n', christoffel)
+    # print('Christoffel Symbols: \n', christoffel)
     return christoffel
 
 def get_reimann_tensor(christoffel_symbols, axes):
@@ -42,7 +42,7 @@ def get_reimann_tensor(christoffel_symbols, axes):
                     reimann[i][j][k][l] = sp.simplify(reimann[i][j][k][l])
     
     # reimann = sp.simplify(reimann)
-    print('\nReimann Curvature Tensor: \n', reimann)
+    # print('\nReimann Curvature Tensor: \n', reimann)
     return reimann
 
 def get_ricci_tensor(reimann_tensor):
@@ -54,8 +54,8 @@ def get_ricci_tensor(reimann_tensor):
             ricci[i][j] = sp.simplify(ricci[i][j])
 
     # ricci = sp.simplify(ricci)
-    print('\nRicci Curvature Tensor: \n', ricci)
-    return ricci
+    print('\nRicci Curvature Tensor: \n', sp.Matrix(ricci))
+    return sp.Matrix(ricci)
 
 def raise_one_index(tensor, metric):
     shape = tensor.shape
@@ -68,8 +68,8 @@ def raise_one_index(tensor, metric):
                 raised_tensor[i][j] += metric_inv[i, k] * tensor[k, j]
             raised_tensor[i][j] = sp.simplify(raised_tensor[i][j])
     # raised_tensor = sp.simplify(raised_tensor)
-    print('\n Raised Tensor: \n', raised_tensor)
-    return raised_tensor
+    # print('\n Raised Tensor: \n', raised_tensor)
+    return sp.Matrix(raised_tensor)
     
 
 def get_curvature_scalar(raised_ricci):
@@ -82,7 +82,7 @@ def get_curvature_scalar(raised_ricci):
     return curvature_scalar
 
 def conform_compacted_metric(axes):
-    return sp.Matrix(([-1, 0, 0, 0], [0, 1, 0, 0], [0, 0, sp.sin(x[1])**2, 0], [0, 0, 0, sp.sin(x[1])**2 * sp.sin(x[2])**2]))
+    return sp.Matrix(([-1, 0, 0, 0], [0, 1, 0, 0], [0, 0, sp.sin(axes[1])**2, 0], [0, 0, 0, sp.sin(axes[1])**2 * sp.sin(axes[2])**2]))
 
 def spherical_metric(axes):
     c = sp.Symbol('c')
@@ -101,7 +101,7 @@ def main():
 
     c = sp.Symbol('c')
 
-    metric_tensor = FRW_metric(x)
+    metric_tensor = conform_compacted_metric(x)
 
     christoffel_symbols = get_christoffel_symbols(metric_tensor, x)
     reimann_curvature_tensor = get_reimann_tensor(christoffel_symbols, x)
@@ -110,18 +110,35 @@ def main():
     curvature_scalar = get_curvature_scalar(raised_ricci_tensor)
 
     einstein_tensor = ricci_curvature_tensor - curvature_scalar * metric_tensor
-    print('\n\nEinstein Tensor: \n\n', sp.latex(einstein_tensor))
+    print('\n\nEinstein Tensor: \n\n', einstein_tensor)
 
     filename = "EinsteinFieldEquations"
     fileHandle = open(filename + ".tex", 'w')
     with fileHandle as file:
         file.write('\\documentclass{article}\n')
         file.write('\\usepackage{amsmath}\n')
-        file.write('\\usepackage[utf8]{inputenc}\n')
+        # file.write('\\usepackage[utf8]{inputenc}\n')
         file.write('\\title{General Relativity Assignment}\n')
-        file.write('\\author{Nimesh}\n')
+        file.write('\\author{Meenal Punia, Kusum Meena, Humayun Akbar\\\\* Shashwat Kashyap, Nimesh Khandelwal}\n')
         file.write('\\begin{document}\n')
-        file.write('$$' + sp.latex(einstein_tensor) + '$$\n')
+        file.write('\\maketitle\n')
+        file.write('\\section{Important Symbols and Tensors}\n')
+        file.write('\\subsection{Metric}\n')
+        file.write('$$ g_\\mu{_\\nu} = ' + sp.latex(metric_tensor) + '$$\n')
+        file.write('\\subsection{Christoffel Symbols}\n')
+        # file.write('$$' + sp.latex(christoffel_symbols) + '$$\n')
+        for i in range(4):
+            for j in range(4):
+                for k in range(4):
+                    if christoffel_symbols[i][j][k] == 0:
+                        continue
+                    file.write('$$ \Gamma^' + str(i) + '{_' + str(j) + '{_' + str(k) + '}} = ' + sp.latex(christoffel_symbols[i][j][k]) + '$$\n')
+        file.write('\\subsection{Ricci Tensor}\n')
+        file.write('$$ R_\\mu{_\\nu} = ' + sp.latex(ricci_curvature_tensor) + '$$\n')
+        file.write('\\subsection{Curvature scalar}\n')
+        file.write('$$ R = ' + sp.latex(curvature_scalar) + '$$\n')
+        file.write('\\subsection{Einstein Tensor}\n')
+        file.write('$$ G_\\mu{_\\nu} = R_\\mu{_\\nu} - Rg_\\mu{_\\nu} = ' + sp.latex(einstein_tensor) + '$$\n')
         file.write('\\end{document}\n')
     fileHandle.close()
 
