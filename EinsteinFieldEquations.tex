@@ -1,8 +1,26 @@
 \documentclass{article}
 \usepackage{amsmath}
-\usepackage[utf8]{inputenc}
 \title{General Relativity Assignment}
-\author{Nimesh}
+\author{Meenal Punia, Kusum Meena, Humayun Akbar\\* Shashwat Kashyap, Nimesh Khandelwal}
 \begin{document}
-$$\left[\begin{matrix}\frac{6 k}{a^{2}} & 0 & 0 & 0\\0 & - \frac{2 k}{k x_{1}^{2} - 1} - \frac{6 k}{- k x_{1}^{2} + 1} & 0 & 0\\0 & 0 & - 4 k x_{1}^{2} & 0\\0 & 0 & 0 & - 4 k x_{1}^{2} \sin^{2}{\left(x_{2} \right)}\end{matrix}\right]$$
+\maketitle
+\section{Important Symbols and Tensors}
+\subsection{Metric}
+$$ g_\mu{_\nu} = \left[\begin{matrix}-1 & 0 & 0 & 0\\0 & 1 & 0 & 0\\0 & 0 & \sin^{2}{\left(x_{1} \right)} & 0\\0 & 0 & 0 & \sin^{2}{\left(x_{1} \right)} \sin^{2}{\left(x_{2} \right)}\end{matrix}\right]$$
+\subsection{Christoffel Symbols}
+$$ \Gamma^1{_2{_2}} = - \frac{\sin{\left(2 x_{1} \right)}}{2}$$
+$$ \Gamma^1{_3{_3}} = - \sin{\left(x_{1} \right)} \sin^{2}{\left(x_{2} \right)} \cos{\left(x_{1} \right)}$$
+$$ \Gamma^2{_1{_2}} = \frac{1}{\tan{\left(x_{1} \right)}}$$
+$$ \Gamma^2{_2{_1}} = \frac{1}{\tan{\left(x_{1} \right)}}$$
+$$ \Gamma^2{_3{_3}} = - \frac{\sin{\left(2 x_{2} \right)}}{2}$$
+$$ \Gamma^3{_1{_3}} = \frac{1}{\tan{\left(x_{1} \right)}}$$
+$$ \Gamma^3{_2{_3}} = \frac{1}{\tan{\left(x_{2} \right)}}$$
+$$ \Gamma^3{_3{_1}} = \frac{1}{\tan{\left(x_{1} \right)}}$$
+$$ \Gamma^3{_3{_2}} = \frac{1}{\tan{\left(x_{2} \right)}}$$
+\subsection{Ricci Tensor}
+$$ R_\mu{_\nu} = \left[\begin{matrix}0 & 0 & 0 & 0\\0 & 2 & 0 & 0\\0 & 0 & 2 \sin^{2}{\left(x_{1} \right)} & 0\\0 & 0 & 0 & 2 \sin^{2}{\left(x_{1} \right)} \sin^{2}{\left(x_{2} \right)}\end{matrix}\right]$$
+\subsection{Curvature scalar}
+$$ R = 6$$
+\subsection{Einstein Tensor}
+$$ G_\mu{_\nu} = R_\mu{_\nu} - Rg_\mu{_\nu} = \left[\begin{matrix}6 & 0 & 0 & 0\\0 & -4 & 0 & 0\\0 & 0 & - 4 \sin^{2}{\left(x_{1} \right)} & 0\\0 & 0 & 0 & - 4 \sin^{2}{\left(x_{1} \right)} \sin^{2}{\left(x_{2} \right)}\end{matrix}\right]$$
 \end{document}
