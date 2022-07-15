@@ -119,7 +119,7 @@ def main():
         file.write('\\usepackage{amsmath}\n')
         # file.write('\\usepackage[utf8]{inputenc}\n')
         file.write('\\title{General Relativity Assignment}\n')
-        file.write('\\author{Meenal Punia, Kusum Meena, Humayun Akbar\\\\* Shashwat Kashyap, Nimesh Khandelwal}\n')
+        file.write('\\author{Nimesh Khandelwal}\n')
         file.write('\\begin{document}\n')
         file.write('\\maketitle\n')
         file.write('\\section{Important Symbols and Tensors}\n')
